@@ -1,0 +1,76 @@
+{
+	"name": "tbl_promotions_dim",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "PROMOTION_DIM_KEY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PROMOTION_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PROMOTION_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "PREVIOUS_PROMOTION_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "PROMOTION_TYPE",
+				"type": "varchar"
+			},
+			{
+				"name": "PREVIOUS_PROMOTION_TYPE",
+				"type": "varchar"
+			},
+			{
+				"name": "DISCOUNT_AMOUNT",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "PREVIOUS_DISCOUNT_AMOUNT",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "START_DATE",
+				"type": "date"
+			},
+			{
+				"name": "PREVIOUS_START_DATE",
+				"type": "date"
+			},
+			{
+				"name": "END_DATE",
+				"type": "date"
+			},
+			{
+				"name": "PREVIOUS_END_DATE",
+				"type": "date"
+			},
+			{
+				"name": "STG_CREATE_DATE",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "HR",
+			"table": "PROMOTION_DIM"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

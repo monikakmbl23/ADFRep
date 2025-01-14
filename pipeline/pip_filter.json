@@ -1,0 +1,40 @@
+{
+	"name": "pip_filter",
+	"properties": {
+		"activities": [
+			{
+				"name": "Filter1",
+				"type": "Filter",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.Filterdata",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@contains(item(),'data')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"Filterdata": {
+				"type": "array",
+				"defaultValue": [
+					"engineer",
+					"data engineer",
+					"data analyst",
+					"developer"
+				]
+			}
+		},
+		"folder": {
+			"name": "Class"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-12-26T08:50:10Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

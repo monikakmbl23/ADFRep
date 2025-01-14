@@ -1,0 +1,114 @@
+{
+	"name": "tbl_sales_fact",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Order_Line_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Order_ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CUSTOMER_DIM_KEY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Payment_Ref_Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "channel_ref_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Delivery_Type_Ref_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Topping_Dim_Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Location_Dim_Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "product_dim_kEY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PROMOTION_DIM_KEY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Date_Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "time_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Order_Date",
+				"type": "date"
+			},
+			{
+				"name": "Order_Status",
+				"type": "varchar"
+			},
+			{
+				"name": "Quantity",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "Unit_price",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "Topping_Price",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 2
+			},
+			{
+				"name": "Promotion_Amount",
+				"type": "decimal",
+				"precision": 5,
+				"scale": 3
+			},
+			{
+				"name": "DM_create_date",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "HR",
+			"table": "SALES_FACT"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

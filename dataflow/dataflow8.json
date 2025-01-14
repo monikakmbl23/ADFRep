@@ -1,0 +1,169 @@
+{
+	"name": "dataflow8",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText6",
+						"type": "DatasetReference"
+					},
+					"name": "memberloyalty"
+				},
+				{
+					"dataset": {
+						"referenceName": "tbl_customer_stg",
+						"type": "DatasetReference"
+					},
+					"name": "customer"
+				},
+				{
+					"dataset": {
+						"referenceName": "ds_stg_store_location",
+						"type": "DatasetReference"
+					},
+					"name": "store"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "tbl_member_loyalty",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          MEMBER_ID as string,",
+				"          ORDER_DATE as string,",
+				"          INITIAL_POINTS_RECEIVED_DATE as string,",
+				"          INITIAL_REWARD_POINTS as string,",
+				"          LAST_EARNED_POINTS as string,",
+				"          TOTAL_POINTS_EARNED as string,",
+				"          REMAINING_POINTS as string,",
+				"          IS_ACTIVE as string,",
+				"          STORE_LOCATION_ID as short,",
+				"          ORDER_ID as string,",
+				"          CUSTOMER_ID as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> memberloyalty",
+				"source(output(",
+				"          CUSTOMER_DIM_KEY as long,",
+				"          CUSTOMER_ID as short,",
+				"          CUSTOMER_FIRST_NAME as string,",
+				"          CUSTOMER_LAST_NAME as string,",
+				"          IS_LOYAL as boolean,",
+				"          PrimaryEmail as string,",
+				"          SecondaryEmail as string,",
+				"          PrimaryNo as string,",
+				"          SecodaryNo as string,",
+				"          R_Address_Lane1 as string,",
+				"          R_Address_Lane_2 as string,",
+				"          R_City_Name as string,",
+				"          R_State_Name as string,",
+				"          R_Country_Name as string,",
+				"          R_Zip_Code as integer,",
+				"          R_Gate_Code as integer,",
+				"          O_Address_Lane1 as string,",
+				"          O_Address_Lane_2 as string,",
+				"          O_City_Name as string,",
+				"          O_State_Name as string,",
+				"          O_Country_Name as string,",
+				"          O_Zip_Code as integer,",
+				"          O_Gate_Code as short,",
+				"          JOINING_DATE as date,",
+				"          STG_CREATE_DATE as date",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> customer",
+				"source(output(",
+				"          STORE_LOCATION_ID as short,",
+				"          STORE_NAME as string,",
+				"          STORE_ADDRESS as string,",
+				"          STORE_PHONE_NUMBER as string,",
+				"          STORE_OPEN_TIME as string,",
+				"          STORE_CLOSE_TIME as string,",
+				"          STATE_COUNTRY_ID as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> store",
+				"memberloyalty, customer join(memberloyalty@CUSTOMER_ID == customer@CUSTOMER_ID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1, store join(memberloyalty@STORE_LOCATION_ID == store@STORE_LOCATION_ID,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2 select(mapColumn(",
+				"          MEMBER_ID,",
+				"          TOTAL_POINTS_EARNED,",
+				"          REMAINING_POINTS,",
+				"          IS_ACTIVE,",
+				"          STORE_LOCATION_ID = memberloyalty@STORE_LOCATION_ID,",
+				"          ORDER_ID,",
+				"          CUSTOMER_DIM_KEY",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 derive(DM_Create_Date = currentDate()) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          member_loyality_program_key as integer,",
+				"          order_id as integer,",
+				"          Member_id as integer,",
+				"          CUSTOMER_DIM_KEY as integer,",
+				"          Location_Dim_Key as integer,",
+				"          Date_Key as integer,",
+				"          Total_Points_Earned as integer,",
+				"          Remaining_points as integer,",
+				"          Is_Active as string,",
+				"          DM_create_date as date",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          order_id = ORDER_ID,",
+				"          Member_id = MEMBER_ID,",
+				"          CUSTOMER_DIM_KEY,",
+				"          Location_Dim_Key = STORE_LOCATION_ID,",
+				"          Total_Points_Earned = TOTAL_POINTS_EARNED,",
+				"          Remaining_points = REMAINING_POINTS,",
+				"          Is_Active = IS_ACTIVE,",
+				"          DM_create_date = DM_Create_Date",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}

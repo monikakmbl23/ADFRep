@@ -1,0 +1,9 @@
+{
+	"name": "AdfTrainingtest2024",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b86255d9-840c-43d8-8278-37ce1a594e5a",
+		"tenantId": "69b95fec-3f02-4c92-a51c-c8ccd1d8f62f"
+	}
+}
