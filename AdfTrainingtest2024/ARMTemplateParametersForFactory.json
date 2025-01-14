@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "AdfTrainingtest2024"
+		},
+		"AzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDB_password": {
+			"value": ""
+		},
+		"NewAzureDataLakeStorage_accountKey": {
+			"value": ""
+		},
+		"Oracle1_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://blobstoragetraining2024.dfs.core.windows.net/"
+		},
+		"AzureSqlDB_properties_typeProperties_server": {
+			"value": "sql-training2024.database.windows.net"
+		},
+		"AzureSqlDB_properties_typeProperties_database": {
+			"value": "SQLTrainingtest2024"
+		},
+		"AzureSqlDB_properties_typeProperties_userName": {
+			"value": "training2024"
+		},
+		"NewAzureDataLakeStorage_properties_typeProperties_url": {
+			"value": "https://newblobstorage2024.dfs.core.windows.net/"
+		}
+	}
+}
